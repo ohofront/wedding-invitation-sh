@@ -1,53 +1,106 @@
-import { PhoneCall } from "lucide-react";
+import { PhoneCall } from 'lucide-react';
+
 const handleCall = () => {
-  window.location.href = "tel:02-2002-3000";
+  window.location.href = 'tel:02-2183-0230';
 };
+
+const DotItem = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <div className='flex gap-4'>
+      <span className='pt-[2px] text-[18px] leading-8 text-[#4a4a4a]'>●</span>
+      <div className='flex-1 text-[15px] leading-8 text-[#4a4a4a]'>{children}</div>
+    </div>
+  );
+};
+
+const DashItem = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <div className='flex gap-4'>
+      <span className='w-4 text-[18px] leading-8 text-[#4a4a4a]'>-</span>
+      <div className='flex-1 text-[15px] leading-8 text-[#4a4a4a]'>{children}</div>
+    </div>
+  );
+};
+
 const WayToCome = () => {
   return (
-    <div className="px-8 leading-8 text-left">
-      <div className="py-2">
-        <div className="text-[17px]">지하철</div>
-        <div className="text-[15px] leading-8">
-          <p>
-            ⦁<span className="text-blue-500"> 4호선 회현역</span> 1번 출구 (도보
-            1분)
-          </p>
-        </div>
+    <div className='px-8 text-left'>
+      <div className='py-2'>
+        <div className='mb-1 text-[17px] text-[#4a4a4a]'>지하철</div>
+
+        <DotItem>
+          <span className='font-semibold'>선릉역 4번 출구(도보1분)</span> 를 나와,
+          <br />
+          IBK기업은행을 지나 50M 직진 맥도날드 옆 한신인터밸리24 빌딩, 4층
+        </DotItem>
       </div>
 
-      <div className="py-2">
-        <div className="text-[17px]">버스</div>
-        <div className="text-[15px] leading-8">
-          <p>
-            간선버스 (<span className="text-blue-500">143, 401, 406</span>)
-          </p>
-          <p>⦁ 남산 3호터널 하차 후 회현사거리 방향으로 도보 1분</p>
-        </div>
-      </div>
+      <div className='py-2'>
+        <div className='mb-1 text-[17px] text-[#4a4a4a]'>버스</div>
 
-      <div className="py-2">
-        <div className="text-[17px]">자가용</div>
-        <div className="text-[15px] leading-8">
-          <p>⦁ 서울 중구 소공로 51(회현동 1번지) 우리은행 본점</p>
+        <DotItem>
+          <div>한국자산신탁, 르네상스호텔, 서울상록회관 정류장 기준</div>
 
-          <div className="flex items-center text-sm transition-transform transform active:scale-98">
-            02) 2002-3000 <PhoneCall size={18} color="#00A8FF" />
-            <span onClick={handleCall} className="text-blue-500 cursor-pointer">
-              전화 하기
-            </span>
+          <div className='pl-6 mt-1'>
+            <DashItem>
+              간선버스 <span className='text-blue-500'>N13, N61, 146, 341, 360, 740</span>
+            </DashItem>
+
+            <DashItem>
+              광역버스 <span className='text-red-500'>1100, 1700, 2000, 2000-1, 7007, 8001, 9303</span>
+            </DashItem>
+
+            <DashItem>선릉역 방향 이동 두꺼비 빌딩 지나 30M 직진 한신인터밸리24 빌딩, 4층</DashItem>
           </div>
-        </div>
+        </DotItem>
+
+        <DotItem>
+          <div>선릉역 1번, 10번 출구 정류장 기준</div>
+
+          <div className='pl-6 mt-1'>
+            <DashItem>
+              간선버스 <span className='text-blue-500'>N13, N61, 146, 333, 341, 360, 740</span>
+            </DashItem>
+
+            <DashItem>
+              광역버스 <span className='text-red-500'>1100, 1700, 2000, 7007, 8001, 9303, 9414</span>
+            </DashItem>
+
+            <DashItem>공항버스 6000</DashItem>
+
+            <DashItem>
+              선릉역 1번, 10번 출구 앞 정류장 하차 후 역삼역 방향으로 이동, 선릉역 4번 출구에서 100M 직진 시 좌측
+              한신인터밸리24 빌딩, 4층
+            </DashItem>
+          </div>
+        </DotItem>
       </div>
 
-      <div className="py-2">
-        <div className="text-[17px]">주차</div>
-        <div className="text-[15px] leading-8">
-          <p>
-            ⦁ 주차 시간 <span className="border-b-2">종일 무료</span>
-          </p>
-          <p>⦁ 지하 2~3층 결혼식 하객 이용 가능합니다.</p>
-          <p>⦁ 자리 부족 시 지하 4층부터 사용 가능합니다.</p>
-        </div>
+      <div className='py-2'>
+        <div className='mb-1 text-[17px] text-[#4a4a4a]'>자가용</div>
+
+        <DotItem>아펠가모 선릉</DotItem>
+
+        <DotItem>도로명 : 서울 강남구 테헤란로 322 한신인터밸리24 빌딩 4층</DotItem>
+
+        <DotItem>지번 : 서울 강남구 역삼동 707-24</DotItem>
+
+        <DotItem>
+          <button
+            type='button'
+            onClick={handleCall}
+            className='flex items-center gap-1 text-blue-500 transition-transform active:scale-95'
+          >
+            02-2183-0230
+            <PhoneCall size={18} color='#00A8FF' />
+          </button>
+        </DotItem>
+      </div>
+
+      <div className='py-2'>
+        <div className='mb-1 text-[17px] text-[#4a4a4a]'>주차</div>
+
+        <DotItem>1시간 30분 무료 &#40;추가 10분당 1,000원&#41;</DotItem>
       </div>
     </div>
   );

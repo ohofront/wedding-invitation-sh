@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 const CountDown = () => {
-  const targetDate = new Date('2025-04-05T15:00:00').getTime();
+  const targetDate = new Date('2026-07-25T17:00:00').getTime();
   const [timer, setTimer] = useState(targetDate - Date.now());
 
   useEffect(() => {
@@ -31,41 +31,41 @@ const CountDown = () => {
 
   return (
     <>
-      <div className="w-full leading-8 mb-5">
-        <div className="inline-block align-top">
-          <div className="text-[#999999] text-[10px]">DAYS</div>
-          <span className="text-xl px-4">{days}</span>
+      <div className='w-full mb-5 leading-8'>
+        <div className='inline-block align-top'>
+          <div className='text-[#999999] text-[10px]'>DAYS</div>
+          <span className='px-4 text-xl'>{days}</span>
         </div>
-        <div className="inline-block align-top">
-          <div className="text-[#999999] text-[10px]">&nbsp;</div>
-          <span className="text-xs">:</span>
+        <div className='inline-block align-top'>
+          <div className='text-[#999999] text-[10px]'>&nbsp;</div>
+          <span className='text-xs'>:</span>
         </div>
-        <div className="inline-block align-top">
-          <div className="text-[#999999] text-[10px]">HOUR</div>
-          <span className="text-xl px-4">{hours}</span>
+        <div className='inline-block align-top'>
+          <div className='text-[#999999] text-[10px]'>HOUR</div>
+          <span className='px-4 text-xl'>{hours}</span>
         </div>
-        <div className="inline-block align-top">
-          <div className="text-[#999999] text-[10px]">&nbsp;</div>
-          <span className="text-xs">:</span>
+        <div className='inline-block align-top'>
+          <div className='text-[#999999] text-[10px]'>&nbsp;</div>
+          <span className='text-xs'>:</span>
         </div>
-        <div className="inline-block align-top">
-          <div className="text-[#999999] text-[10px]">MIN</div>
-          <span className="text-xl px-4">{minutes}</span>
+        <div className='inline-block align-top'>
+          <div className='text-[#999999] text-[10px]'>MIN</div>
+          <span className='px-4 text-xl'>{minutes}</span>
         </div>
-        <div className="inline-block align-top">
-          <div className="text-[#999999] text-[10px]">&nbsp;</div>
-          <span className="text-xs">:</span>
+        <div className='inline-block align-top'>
+          <div className='text-[#999999] text-[10px]'>&nbsp;</div>
+          <span className='text-xs'>:</span>
         </div>
-        <div className="inline-block align-top">
-          <div className="text-[#999999] text-[10px]">SEC</div>
-          <span className="text-xl px-4">{seconds}</span>
+        <div className='inline-block align-top'>
+          <div className='text-[#999999] text-[10px]'>SEC</div>
+          <span className='px-4 text-xl'>{seconds}</span>
         </div>
       </div>
 
       <div>
-        <span>동윤🩷정현 의 결혼식이&nbsp;</span>
+        <span>성현🩷소민 의 결혼식이&nbsp;</span>
         <span>
-          <span className="text-[#ea7664]">{days + 1}일</span>
+          <span className='text-[#ea7664]'>{days + 1}일</span>
           <span>&nbsp;남았습니다.</span>
         </span>
       </div>

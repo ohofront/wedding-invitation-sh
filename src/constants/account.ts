@@ -2,36 +2,36 @@ import { AccountType } from '@/types';
 
 export const groomAccount: AccountType[] = [
   {
-    name: '이원배',
-    bank: '우리은행',
-    accountNumber: '01086350842',
+    name: '박한용',
+    bank: '신한은행',
+    accountNumber: '338-12-077850',
   },
   {
-    name: '강경희',
-    bank: '우리은행',
-    accountNumber: '01090240842',
+    name: '이용희',
+    bank: '국민은행',
+    accountNumber: '047-24-0258-605',
   },
   {
-    name: '이동윤',
-    bank: '우리은행',
-    accountNumber: '1002-253-796523',
+    name: '박성현',
+    bank: '기업은행',
+    accountNumber: '539-025138-01-013',
   },
 ];
 
 export const brideAccount: AccountType[] = [
   {
-    name: '서동명',
+    name: '조국진',
     bank: '농협은행',
-    accountNumber: '352-0900-0967-63',
+    accountNumber: '352-1823-4981-23',
   },
   {
-    name: '권숙이',
+    name: '배혜정',
     bank: '농협은행',
-    accountNumber: '352-1019-9362-03',
+    accountNumber: '312-0176-822821',
   },
   {
-    name: '서정현',
-    bank: '하나은행 ',
-    accountNumber: '906-910127-06107',
+    name: '조소민',
+    bank: '신한은행',
+    accountNumber: '110-451-851395',
   },
 ];

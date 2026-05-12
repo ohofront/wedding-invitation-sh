@@ -1,8 +1,8 @@
 const WeddingInfo = () => {
   return (
-    <div className="relative text-[1rem] leading-[2rem] text-[#2b2222]">
-      <p>2025년 4월 5일 토요일 오후 3시</p>
-      <p>우리은행 본점 4층 예식장</p>
+    <div className='relative text-[1rem] leading-[2rem] text-[#2b2222]'>
+      <p>2026 7월 25일 토요일 오후 5시</p>
+      <p>아펠가모 선릉 4층 단독홀</p>
     </div>
   );
 };

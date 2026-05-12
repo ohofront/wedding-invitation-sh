@@ -1,11 +1,4 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 const days = ['일', '월', '화', '수', '목', '금', '토'];
 
@@ -18,21 +11,16 @@ const CalendarContent = () => {
     .concat([...Array(lastDate)].map((_, i) => i + 1));
 
   return (
-    <div className="w-full h-full leading-9">
-      <div className="font-medium text-2xl tracking-wide">2025.04.05</div>
-      <div className="mb-5 tracking-wider">토요일 오후 3시</div>
+    <div className='w-full h-full leading-9'>
+      <div className='text-2xl font-medium tracking-wide'>2026.07.25</div>
+      <div className='mb-5 tracking-wider'>토요일 오후 5시</div>
 
-      <div className="w-full text-center px-4 pb-10">
+      <div className='w-full px-4 pb-10 text-center'>
         <Table>
           <TableHeader>
             <TableRow>
               {days.map((day, index) => (
-                <TableHead
-                  key={index}
-                  className={
-                    day === '일' ? 'text-[#c6472b] text-center' : 'text-center'
-                  }
-                >
+                <TableHead key={index} className={day === '일' ? 'text-[#c6472b] text-center' : 'text-center'}>
                   {day}
                 </TableHead>
               ))}
@@ -45,8 +33,7 @@ const CalendarContent = () => {
                   <TableCell
                     key={i}
                     className={
-                      (i === 0 ? 'text-[#c6472b]' : '') ||
-                      (date === 5 ? 'bg-[#858585] text-white rounded-full' : '')
+                      (i === 0 ? 'text-[#c6472b]' : '') || (date === 5 ? 'bg-[#858585] text-white rounded-full' : '')
                     }
                   >
                     {date || ''}

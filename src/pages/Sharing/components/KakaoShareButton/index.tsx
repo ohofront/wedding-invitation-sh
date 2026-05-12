@@ -23,10 +23,9 @@ const KakaoShareButton = () => {
     window.Kakao.Share.sendDefault({
       objectType: 'feed',
       content: {
-        title: '이동윤 ♥ 서정현 결혼합니다',
+        title: '박성현 ♥ 조소민 결혼합니다',
         description: '저희의 결혼식에 초대합니다.',
-        imageUrl:
-          'https://wedding-invitation-olive-two.vercel.app/images/wedding.png',
+        imageUrl: 'https://wedding-invitation-olive-two.vercel.app/images/wedding.png',
         link: {
           mobileWebUrl: 'https://wedding-invitation-olive-two.vercel.app',
           webUrl: 'https://wedding-invitation-olive-two.vercel.app',
@@ -45,14 +44,9 @@ const KakaoShareButton = () => {
   };
 
   return (
-    <Button onClick={shareKakao} variant="ghost" className="gap-2 text-lg">
-      <img
-        src={KakaoIcon}
-        alt="카카오톡 아이콘"
-        width={18}
-        className="grayscale"
-      />
-      <p className="text-sm">카카오톡 공유하기</p>
+    <Button onClick={shareKakao} variant='ghost' className='gap-2 text-lg'>
+      <img src={KakaoIcon} alt='카카오톡 아이콘' width={18} className='grayscale' />
+      <p className='text-sm'>카카오톡 공유하기</p>
     </Button>
   );
 };
