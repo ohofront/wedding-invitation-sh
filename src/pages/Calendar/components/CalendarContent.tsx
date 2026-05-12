@@ -3,8 +3,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 const days = ['일', '월', '화', '수', '목', '금', '토'];
 
 const CalendarContent = () => {
-  const firstDay = new Date(2025, 3, 1).getDay(); // 화요일 = 2
-  const lastDate = new Date(2025, 4, 0).getDate(); // 30일
+  const firstDay = new Date(2026, 6, 1).getDay(); // 2026년 7월 1일
+  const lastDate = new Date(2026, 7, 0).getDate(); // 2026년 7월 마지막 날짜
 
   const dates = Array(firstDay)
     .fill(null)
@@ -20,25 +20,47 @@ const CalendarContent = () => {
           <TableHeader>
             <TableRow>
               {days.map((day, index) => (
-                <TableHead key={index} className={day === '일' ? 'text-[#c6472b] text-center' : 'text-center'}>
+                <TableHead
+                  key={index}
+                  className={
+                    day === '일'
+                      ? 'text-[#c6472b] text-center'
+                      : day === '토'
+                        ? 'text-blue-500 text-center'
+                        : 'text-center'
+                  }
+                >
                   {day}
                 </TableHead>
               ))}
             </TableRow>
           </TableHeader>
+
           <TableBody>
             {Array.from({ length: Math.ceil(dates.length / 7) }, (_, week) => (
               <TableRow key={week}>
-                {dates.slice(week * 7, (week + 1) * 7).map((date, i) => (
-                  <TableCell
-                    key={i}
-                    className={
-                      (i === 0 ? 'text-[#c6472b]' : '') || (date === 5 ? 'bg-[#858585] text-white rounded-full' : '')
-                    }
-                  >
-                    {date || ''}
-                  </TableCell>
-                ))}
+                {dates.slice(week * 7, (week + 1) * 7).map((date, i) => {
+                  const isSunday = i === 0;
+                  const isSaturday = i === 6;
+                  const isWeddingDay = date === 25;
+
+                  return (
+                    <TableCell
+                      key={i}
+                      className={
+                        isWeddingDay
+                          ? 'bg-[#858585] text-white rounded-full'
+                          : isSunday
+                            ? 'text-[#c6472b]'
+                            : isSaturday
+                              ? 'text-blue-500'
+                              : ''
+                      }
+                    >
+                      {date || ''}
+                    </TableCell>
+                  );
+                })}
               </TableRow>
             ))}
           </TableBody>
