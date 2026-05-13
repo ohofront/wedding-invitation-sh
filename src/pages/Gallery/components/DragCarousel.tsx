@@ -5,7 +5,7 @@ import { GalleryType } from '@/types';
 import Pagination from './Pagination';
 
 const Carousel = () => {
-  const parsedImages: GalleryType[] = Array.from({ length: 20 }).map((_, index) => ({
+  const parsedImages: GalleryType[] = Array.from({ length: 19 }).map((_, index) => ({
     id: index + 1,
     src: `/images/react_wedding_invitation_${index}.jpg`,
     alt: String(index + 1),
