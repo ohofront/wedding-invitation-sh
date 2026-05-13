@@ -58,15 +58,41 @@ const Map = () => {
 
   const openWithTMap = () => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-    if (isMobile) {
-      // API 키 없이 스마트폰의 티맵 앱을 직접 깨우는(Scheme) 방식
-      window.location.href = `tmap://route?goalname=${encodeURIComponent(
-        WEDDING_HALL_NAME
-      )}&goalx=${LONGITUDE}&goaly=${LATITUDE}`;
-    } else {
+    if (!isMobile) {
       alert('티맵은 모바일 기기에서만 이용 가능합니다.');
+      return;
     }
+
+    const tmapUrl = `tmap://route?rGoName=${encodeURIComponent(WEDDING_HALL_NAME)}&rGoX=${LONGITUDE}&rGoY=${LATITUDE}`;
+
+    const fallbackUrl = isAndroid
+      ? 'https://play.google.com/store/apps/details?id=com.skt.tmap.ku'
+      : isIOS
+        ? 'https://apps.apple.com/kr/app/t-map-%ED%8B%B0%EB%A7%B5/id431589174'
+        : '';
+
+    let isAppOpened = false;
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        isAppOpened = true;
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    window.location.href = tmapUrl;
+
+    setTimeout(() => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+
+      if (!isAppOpened && fallbackUrl) {
+        window.location.href = fallbackUrl;
+      }
+    }, 1500);
   };
 
   return (
