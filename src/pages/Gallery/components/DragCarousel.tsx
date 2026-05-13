@@ -22,18 +22,50 @@ const Carousel = () => {
   const [isVerticalScroll, setIsVerticalScroll] = useState(false);
   const [translateX, setTranslateX] = useState(0);
 
-  const containerRef = useRef<HTMLDivElement>(null);
+  // 화면에 캐러셀이 보이는지 여부를 추적하는 상태
+  const [isVisible, setIsVisible] = useState(false);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  // 전체 캐러셀 영역을 관찰하기 위한 ref
+  const carouselWrapperRef = useRef<HTMLDivElement>(null);
+
+  // 🌟 새롭게 추가된 부분: 화면에 캐러셀이 보이는지 감지
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+        (entries) => {
+          const [entry] = entries;
+          // 화면에 요소가 교차되면(보이면) true, 안 보이면 false
+          setIsVisible(entry.isIntersecting);
+        },
+        {
+          threshold: 0.3, // 캐러셀이 화면에 30% 이상 보일 때 작동 시작
+        }
+    );
+
+    if (carouselWrapperRef.current) {
+      observer.observe(carouselWrapperRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  // 기존 자동 넘김 로직
   useEffect(() => {
     if (!parsedImages.length) return;
     if (dragging) return;
+
+    // 🌟 추가된 부분: 화면에 보이지 않으면 interval을 설정하지 않고 종료
+    if (!isVisible) return;
 
     const interval = setInterval(() => {
       setCurrentIndex((prev) => prev + 1);
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [dragging, parsedImages.length]);
+    // 의존성 배열에 isVisible 추가
+  }, [dragging, parsedImages.length, isVisible]);
 
   const handleTransitionEnd = () => {
     if (currentIndex === 0) {
@@ -84,7 +116,6 @@ const Carousel = () => {
 
       setIsVerticalScroll(false);
 
-      // 가로 스와이프 시 브라우저 기본 스크롤 동작 방지
       if (e && e.cancelable) {
         e.preventDefault();
       }
@@ -111,10 +142,12 @@ const Carousel = () => {
   };
 
   return (
-      <div className='relative w-full overflow-hidden bg-background'>
+      <div
+          ref={carouselWrapperRef} // 🌟 여기에 ref 추가 (감지 대상)
+          className='relative w-full overflow-hidden bg-background'
+      >
         <div
             ref={containerRef}
-            // touch-pan-y 클래스를 추가하여 브라우저 수준에서 가로 스와이프 시 세로 스크롤 간섭을 방지합니다.
             className='flex transition-transform duration-300 ease-out touch-pan-y'
             style={{
               transform: `translateX(calc(-${currentIndex * 100}% + ${translateX}px))`,
