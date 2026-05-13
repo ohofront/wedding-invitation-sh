@@ -12,8 +12,8 @@ const Carousel = () => {
   }));
 
   const extendedImages: GalleryType[] = parsedImages.length
-    ? [parsedImages[parsedImages.length - 1], ...parsedImages, parsedImages[0]]
-    : [];
+      ? [parsedImages[parsedImages.length - 1], ...parsedImages, parsedImages[0]]
+      : [];
 
   const [currentIndex, setCurrentIndex] = useState(1);
   const [dragStartX, setDragStartX] = useState<number | null>(null);
@@ -66,7 +66,11 @@ const Carousel = () => {
     setIsVerticalScroll(false);
   };
 
-  const handleDragMove = (clientX: number, clientY: number, e?: Event) => {
+  const handleDragMove = (
+      clientX: number,
+      clientY: number,
+      e?: React.MouseEvent | React.TouchEvent
+  ) => {
     if (!dragging || dragStartX === null || dragStartY === null) return;
 
     const deltaX = clientX - dragStartX;
@@ -80,7 +84,8 @@ const Carousel = () => {
 
       setIsVerticalScroll(false);
 
-      if (e) {
+      // 가로 스와이프 시 브라우저 기본 스크롤 동작 방지
+      if (e && e.cancelable) {
         e.preventDefault();
       }
     }
@@ -106,54 +111,54 @@ const Carousel = () => {
   };
 
   return (
-    <div className='relative w-full overflow-hidden bg-background'>
-      <div
-        ref={containerRef}
-        className='flex transition-transform duration-300 ease-out'
-        style={{
-          transform: `translateX(calc(-${currentIndex * 100}% + ${translateX}px))`,
-        }}
-        onTransitionEnd={handleTransitionEnd}
-        onMouseDown={(e) => {
-          e.preventDefault();
-          handleDragStart(e.clientX, e.clientY);
-        }}
-        onMouseMove={(e) => {
-          if (dragging) {
-            e.preventDefault();
-            handleDragMove(e.clientX, e.clientY);
-          }
-        }}
-        onMouseUp={(e) => {
-          e.preventDefault();
-          handleDragEnd();
-        }}
-        onMouseLeave={(e) => {
-          if (dragging) {
-            e.preventDefault();
-            handleDragEnd();
-          }
-        }}
-        onTouchStart={(e) => handleDragStart(e.touches[0].clientX, e.touches[0].clientY)}
-        onTouchMove={(e) => handleDragMove(e.touches[0].clientX, e.touches[0].clientY)}
-        onTouchEnd={handleDragEnd}
-      >
-        {extendedImages.map((item, index) => (
-          <div className='flex-shrink-0 w-full' key={`${item.id}-${index}`}>
-            <div className='flex items-center justify-center w-full min-h-[560px] bg-[#f8f4ef]'>
-              <img
-                loading={index === currentIndex ? 'eager' : 'lazy'}
-                className='w-full max-h-[760px] object-contain'
-                src={item.src}
-                alt={item.alt}
-              />
-            </div>
-          </div>
-        ))}
-      </div>
+      <div className='relative w-full overflow-hidden bg-background'>
+        <div
+            ref={containerRef}
+            // touch-pan-y 클래스를 추가하여 브라우저 수준에서 가로 스와이프 시 세로 스크롤 간섭을 방지합니다.
+            className='flex transition-transform duration-300 ease-out touch-pan-y'
+            style={{
+              transform: `translateX(calc(-${currentIndex * 100}% + ${translateX}px))`,
+            }}
+            onTransitionEnd={handleTransitionEnd}
+            onMouseDown={(e) => {
+              e.preventDefault();
+              handleDragStart(e.clientX, e.clientY);
+            }}
+            onMouseMove={(e) => {
+              if (dragging) {
+                handleDragMove(e.clientX, e.clientY, e);
+              }
+            }}
+            onMouseUp={(e) => {
+              e.preventDefault();
+              handleDragEnd();
+            }}
+            onMouseLeave={(e) => {
+              if (dragging) {
+                e.preventDefault();
+                handleDragEnd();
+              }
+            }}
+            onTouchStart={(e) => handleDragStart(e.touches[0].clientX, e.touches[0].clientY)}
+            onTouchMove={(e) => handleDragMove(e.touches[0].clientX, e.touches[0].clientY, e)}
+            onTouchEnd={handleDragEnd}
+        >
+          {extendedImages.map((item, index) => (
+              <div className='flex-shrink-0 w-full' key={`${item.id}-${index}`}>
+                <div className='flex items-center justify-center w-full min-h-[560px] bg-[#f8f4ef]'>
+                  <img
+                      loading={index === currentIndex ? 'eager' : 'lazy'}
+                      className='w-full max-h-[760px] object-contain'
+                      src={item.src}
+                      alt={item.alt}
+                  />
+                </div>
+              </div>
+          ))}
+        </div>
 
-      <Pagination currentIndex={currentIndex} onPageChange={setCurrentIndex} />
-    </div>
+        <Pagination currentIndex={currentIndex} onPageChange={setCurrentIndex} />
+      </div>
   );
 };
 
