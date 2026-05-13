@@ -60,11 +60,12 @@ const Map = () => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     if (isMobile) {
-      window.location.href = `https://apis.openapi.sk.com/tmap/app/routes?name=${encodeURIComponent(
+      // API 키 없이 스마트폰의 티맵 앱을 직접 깨우는(Scheme) 방식
+      window.location.href = `tmap://route?goalname=${encodeURIComponent(
         WEDDING_HALL_NAME
-      )}&lon=${LONGITUDE}&lat=${LATITUDE}`;
+      )}&goalx=${LONGITUDE}&goaly=${LATITUDE}`;
     } else {
-      alert('모바일에서 확인 가능합니다');
+      alert('티맵은 모바일 기기에서만 이용 가능합니다.');
     }
   };
 
