@@ -1,4 +1,5 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Heart } from 'lucide-react';
 
 const days = ['일', '월', '화', '수', '목', '금', '토'];
 
@@ -49,7 +50,7 @@ const CalendarContent = () => {
                       key={i}
                       className={
                         isWeddingDay
-                          ? 'bg-[#858585] text-white rounded-full'
+                          ? 'text-white'
                           : isSunday
                             ? 'text-[#c6472b]'
                             : isSaturday
@@ -57,7 +58,17 @@ const CalendarContent = () => {
                               : ''
                       }
                     >
-                      {date || ''}
+                      {isWeddingDay ? (
+                        <span className="relative inline-flex h-9 w-9 items-center justify-center">
+                          <Heart
+                            className="absolute inset-0 h-full w-full fill-[#858585] text-[#858585]"
+                            aria-hidden="true"
+                          />
+                          <span className="relative z-10">{date}</span>
+                        </span>
+                      ) : (
+                        date || ''
+                      )}
                     </TableCell>
                   );
                 })}
