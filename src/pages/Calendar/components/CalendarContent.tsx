@@ -1,7 +1,36 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Heart } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { CalendarPlus, Heart } from 'lucide-react';
 
 const days = ['일', '월', '화', '수', '목', '금', '토'];
+const weddingTitle = '성현 소민 결혼식';
+const weddingLocation = '아펠가모 선릉 4층 단독홀';
+const weddingStart = '20260725T170000';
+const weddingEnd = '20260725T190000';
+
+const escapeCalendarText = (text: string) =>
+  text.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
+
+const createCalendarFile = () => {
+  const calendarLines = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Wedding Invitation//SH//KO',
+    'CALSCALE:GREGORIAN',
+    'METHOD:PUBLISH',
+    'BEGIN:VEVENT',
+    `UID:wedding-sh-20260725T170000@wedding-invitation`,
+    `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '')}`,
+    `DTSTART;TZID=Asia/Seoul:${weddingStart}`,
+    `DTEND;TZID=Asia/Seoul:${weddingEnd}`,
+    `SUMMARY:${escapeCalendarText(weddingTitle)}`,
+    `LOCATION:${escapeCalendarText(weddingLocation)}`,
+    'END:VEVENT',
+    'END:VCALENDAR',
+  ];
+
+  return new Blob([calendarLines.join('\r\n')], { type: 'text/calendar;charset=utf-8' });
+};
 
 const CalendarContent = () => {
   const firstDay = new Date(2026, 6, 1).getDay(); // 2026년 7월 1일
@@ -10,6 +39,20 @@ const CalendarContent = () => {
   const dates = Array(firstDay)
     .fill(null)
     .concat([...Array(lastDate)].map((_, i) => i + 1));
+
+  const handleAddCalendar = () => {
+    const calendarFile = createCalendarFile();
+    const calendarUrl = URL.createObjectURL(calendarFile);
+    const link = document.createElement('a');
+
+    link.href = calendarUrl;
+    link.download = 'wedding-sh-2026-07-25.ics';
+    link.rel = 'noopener';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.setTimeout(() => URL.revokeObjectURL(calendarUrl), 1000);
+  };
 
   return (
     <div className='w-full h-full leading-9'>
@@ -76,6 +119,17 @@ const CalendarContent = () => {
             ))}
           </TableBody>
         </Table>
+
+        <Button
+          type="button"
+          variant="outline"
+          size="custom"
+          className="mt-8 gap-2 border-[#d8d1cc] bg-white text-[#2b2222] shadow-sm hover:bg-[#f8f4f1]"
+          onClick={handleAddCalendar}
+        >
+          <CalendarPlus className="h-4 w-4" aria-hidden="true" />
+          캘린더 등록하기
+        </Button>
       </div>
     </div>
   );
