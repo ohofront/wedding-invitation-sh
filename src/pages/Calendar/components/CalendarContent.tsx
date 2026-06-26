@@ -5,32 +5,10 @@ import { CalendarPlus, Heart } from 'lucide-react';
 const days = ['일', '월', '화', '수', '목', '금', '토'];
 const weddingTitle = '성현 소민 결혼식';
 const weddingLocation = '아펠가모 선릉 4층 단독홀';
-const weddingStart = '20260725T170000';
-const weddingEnd = '20260725T190000';
-
-const escapeCalendarText = (text: string) =>
-  text.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
-
-const createCalendarFile = () => {
-  const calendarLines = [
-    'BEGIN:VCALENDAR',
-    'VERSION:2.0',
-    'PRODID:-//Wedding Invitation//SH//KO',
-    'CALSCALE:GREGORIAN',
-    'METHOD:PUBLISH',
-    'BEGIN:VEVENT',
-    `UID:wedding-sh-20260725T170000@wedding-invitation`,
-    `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '')}`,
-    `DTSTART;TZID=Asia/Seoul:${weddingStart}`,
-    `DTEND;TZID=Asia/Seoul:${weddingEnd}`,
-    `SUMMARY:${escapeCalendarText(weddingTitle)}`,
-    `LOCATION:${escapeCalendarText(weddingLocation)}`,
-    'END:VEVENT',
-    'END:VCALENDAR',
-  ];
-
-  return new Blob([calendarLines.join('\r\n')], { type: 'text/calendar;charset=utf-8' });
-};
+const weddingDescription = '성현 소민의 결혼식에 초대합니다.';
+const calendarFileUrl = '/wedding-sh-2026-07-25.ics';
+const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(weddingTitle)}&dates=20260725T080000Z/20260725T100000Z&ctz=Asia%2FSeoul&location=${encodeURIComponent(weddingLocation)}&details=${encodeURIComponent(weddingDescription)}`;
+const androidCalendarIntent = `intent://calendar/event#Intent;action=android.intent.action.INSERT;type=vnd.android.cursor.item/event;l.beginTime=1784966400000;l.endTime=1784973600000;S.title=${encodeURIComponent(weddingTitle)};S.eventLocation=${encodeURIComponent(weddingLocation)};S.description=${encodeURIComponent(weddingDescription)};S.browser_fallback_url=${encodeURIComponent(googleCalendarUrl)};end`;
 
 const CalendarContent = () => {
   const firstDay = new Date(2026, 6, 1).getDay(); // 2026년 7월 1일
@@ -41,17 +19,24 @@ const CalendarContent = () => {
     .concat([...Array(lastDate)].map((_, i) => i + 1));
 
   const handleAddCalendar = () => {
-    const calendarFile = createCalendarFile();
-    const calendarUrl = URL.createObjectURL(calendarFile);
-    const link = document.createElement('a');
+    const isAndroid = /Android/i.test(navigator.userAgent);
 
-    link.href = calendarUrl;
-    link.download = 'wedding-sh-2026-07-25.ics';
-    link.rel = 'noopener';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.setTimeout(() => URL.revokeObjectURL(calendarUrl), 1000);
+    if (!isAndroid) {
+      window.location.href = calendarFileUrl;
+      return;
+    }
+
+    const fallbackTimer = window.setTimeout(() => {
+      if (document.visibilityState === 'visible') {
+        window.location.href = googleCalendarUrl;
+      }
+    }, 1500);
+
+    const clearFallbackTimer = () => window.clearTimeout(fallbackTimer);
+    window.addEventListener('pagehide', clearFallbackTimer, { once: true });
+    document.addEventListener('visibilitychange', clearFallbackTimer, { once: true });
+
+    window.location.href = androidCalendarIntent;
   };
 
   return (

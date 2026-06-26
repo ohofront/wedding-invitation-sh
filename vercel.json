@@ -1,0 +1,17 @@
+{
+  "headers": [
+    {
+      "source": "/wedding-sh-2026-07-25.ics",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/calendar; charset=utf-8"
+        },
+        {
+          "key": "Content-Disposition",
+          "value": "inline; filename=\"wedding-sh-2026-07-25.ics\""
+        }
+      ]
+    }
+  ]
+}
