@@ -1,11 +1,7 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
-import { CalendarPlus, Heart } from 'lucide-react';
+import { Heart } from 'lucide-react';
 
 const days = ['일', '월', '화', '수', '목', '금', '토'];
-const weddingTitle = '성현 소민 결혼식';
-const weddingLocation = '아펠가모 선릉 4층 단독홀';
-const weddingDescription = '성현 소민의 결혼식에 초대합니다.';
 
 const CalendarContent = () => {
   const firstDay = new Date(2026, 6, 1).getDay(); // 2026년 7월 1일
@@ -81,16 +77,6 @@ const CalendarContent = () => {
           </TableBody>
         </Table>
 
-        <Button
-          type="button"
-          variant="outline"
-          size="custom"
-          className="mt-8 gap-2 border-[#d8d1cc] bg-white text-[#2b2222] shadow-sm hover:bg-[#f8f4f1]"
-          disabled
-        >
-          <CalendarPlus className="h-4 w-4" aria-hidden="true" />
-          캘린더 등록하기
-        </Button>
       </div>
     </div>
   );
